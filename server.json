@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.gkaragioul/deltabot-utility-suite",
+  "title": "DeltaBot Utility Suite",
+  "description": "A hosted suite of 25 deterministic utility tools paid per call with Base-USDC x402.",
+  "version": "1.0.0",
+  "websiteUrl": "https://deltabot-x402-seller-production.up.railway.app/v1/samples",
+  "repository": {
+    "url": "https://github.com/gkaragioul/deltabot-utility-suite",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://deltabot-x402-seller-production.up.railway.app/mcp"
+    }
+  ]
+}
