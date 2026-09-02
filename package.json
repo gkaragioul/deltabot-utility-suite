@@ -1,0 +1,27 @@
+{
+  "name": "@gkaragioul/deltabot-utility-suite",
+  "version": "1.0.0",
+  "description": "A stdio MCP bridge for the hosted DeltaBot Utility Suite.",
+  "license": "MIT",
+  "type": "module",
+  "mcpName": "io.github.gkaragioul/deltabot-utility-suite",
+  "bin": {
+    "deltabot-utility-suite": "bin/deltabot-utility-suite.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "mcp-remote": "0.8.3"
+  }
+}
