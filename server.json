@@ -9,6 +9,16 @@
     "url": "https://github.com/gkaragioul/deltabot-utility-suite",
     "source": "github"
   },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@gkaragioul/deltabot-utility-suite",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ],
   "remotes": [
     {
       "type": "streamable-http",
