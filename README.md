@@ -37,3 +37,8 @@ compatible wallet.
 `server.json` declares the npm stdio package and the direct hosted remote for
 the official MCP Registry. It does not claim a Registry listing until the
 Registry accepts the published metadata.
+
+## Verification
+
+Verified against the live hosted endpoint with MCP `initialize` and
+`tools/list`; no on-chain payment was made.
