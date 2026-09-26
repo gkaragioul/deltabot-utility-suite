@@ -8,14 +8,23 @@ const serverJson = JSON.parse(await readFile(new URL('../server.json', import.me
 test('declares the same verified MCP identity in npm and Registry metadata', () => {
   assert.equal(packageJson.mcpName, 'io.github.gkaragioul/deltabot-utility-suite');
   assert.equal(serverJson.name, packageJson.mcpName);
+  assert.ok(serverJson.description.length <= 100, 'Registry descriptions are limited to 100 characters');
   assert.deepEqual(serverJson.packages, [{
     registryType: 'npm',
     identifier: '@gkaragioul/deltabot-utility-suite',
     version: '1.0.0',
     transport: { type: 'stdio' },
+    environmentVariables: [{
+      name: 'DELTABOT_SERVICE_URL',
+      description: 'MCP endpoint of a DeltaBot server you trust; the bridge refuses to start without it.',
+      isRequired: true,
+      format: 'string',
+    }],
   }]);
-  assert.deepEqual(serverJson.remotes, [{
-    type: 'streamable-http',
-    url: 'https://deltabot-x402-seller-production.up.railway.app/mcp',
-  }]);
+});
+
+test('points at no hosted endpoint, since the original service is offline', () => {
+  assert.equal(serverJson.remotes, undefined);
+  assert.equal(serverJson.websiteUrl, undefined);
+  assert.doesNotMatch(JSON.stringify(serverJson), /railway\.app/);
 });

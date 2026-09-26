@@ -1,7 +1,7 @@
 {
   "name": "@gkaragioul/deltabot-utility-suite",
   "version": "1.0.0",
-  "description": "A stdio MCP bridge for the hosted DeltaBot Utility Suite.",
+  "description": "A stdio MCP bridge to a DeltaBot Utility Suite server you configure with DELTABOT_SERVICE_URL.",
   "license": "MIT",
   "type": "module",
   "mcpName": "io.github.gkaragioul/deltabot-utility-suite",

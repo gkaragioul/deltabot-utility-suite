@@ -6,12 +6,12 @@ client needs its own x402-capable wallet to approve a paid call.
 
 > [!WARNING]
 > **The hosted service is offline.** Since at least 26 September 2026 its
-> Railway address returns "Application not found", so neither the direct URL
-> nor the bridge below has anything to connect to. The code is kept for
-> reference and in case the service comes back.
+> old address returns "Application not found", and it has been removed from
+> this repository. The bridge now refuses to start unless you point it at a
+> server yourself with `DELTABOT_SERVICE_URL`. The code is kept for reference.
 
 This repository contains a credential-free local stdio bridge. It connects
-supported MCP clients to the hosted DeltaBot service; it does not contain a
+supported MCP clients to a DeltaBot server you choose; it does not contain a
 seller wallet, buyer key, Railway credential, or local copy of the paid tools.
 It is not published on npm; `npx` installs it straight from this repository.
 
@@ -32,17 +32,23 @@ npm test
 ```
 
 Then configure the client to run `node` with the absolute path of
-`bin/deltabot-utility-suite.mjs` as its only argument. Once connected, the client
+`bin/deltabot-utility-suite.mjs` as its only argument, and set
+`DELTABOT_SERVICE_URL` (see below). Once connected, the client
 lists the 25 tools; calling one returns an x402 payment request that your wallet
 must approve before the tool runs.
 
-## Connect directly (Streamable HTTP)
+## Choose a server: `DELTABOT_SERVICE_URL`
 
-MCP clients that support remote Streamable HTTP can connect directly to:
+There is no default server. The bridge reads the MCP endpoint from the
+`DELTABOT_SERVICE_URL` environment variable and, when it is not set, exits with:
 
 ```text
-https://deltabot-x402-seller-production.up.railway.app/mcp
+the hosted DeltaBot service is offline; set DELTABOT_SERVICE_URL to a server you trust
 ```
+
+Only use a server you trust: it decides which tools exist and what each paid
+call asks your wallet to approve. Clients with Streamable HTTP support can
+connect to that server's MCP endpoint directly instead of using the bridge.
 
 ## Connect from a stdio-only client
 
@@ -51,22 +57,23 @@ Configure the client to run this command:
 ```json
 {
   "command": "npx",
-  "args": ["-y", "github:gkaragioul/deltabot-utility-suite"]
+  "args": ["-y", "github:gkaragioul/deltabot-utility-suite"],
+  "env": { "DELTABOT_SERVICE_URL": "https://your-trusted-server.example/mcp" }
 }
 ```
 
 The command downloads the bridge from this repository and starts it as a local
-stdio bridge to the same hosted service. Tool
+stdio bridge to the server in `DELTABOT_SERVICE_URL`. Tool
 discovery is free; a paid tool call receives its Base-USDC x402 payment request
-from the hosted seller and can only proceed after the buyer pays with their own
+from that server and can only proceed after the buyer pays with their own
 compatible wallet.
 
 ## Registry metadata
 
 `server.json` is prepared for the official MCP Registry. It names the npm
-package `@gkaragioul/deltabot-utility-suite`, which has not been published, so
-it cannot be submitted until that package is on npm and the service is back
-online. The project is not listed in the Registry.
+package `@gkaragioul/deltabot-utility-suite`, which has not been published, and
+declares `DELTABOT_SERVICE_URL` as a required variable. It lists no hosted remote,
+because the original service is offline. The project is not listed in the Registry.
 
 ## Verification
 
