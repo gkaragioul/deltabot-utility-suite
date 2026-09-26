@@ -4,16 +4,25 @@ DeltaBot Utility Suite is a hosted MCP service with 25 deterministic utility
 tools. Each tool is paid per call through Base-USDC x402; the buyer's MCP
 client needs its own x402-capable wallet to approve a paid call.
 
-The npm package is a credential-free local stdio bridge. It connects supported
-MCP clients to the hosted DeltaBot service; it does not contain a seller wallet,
-buyer key, Railway credential, or local copy of the paid tools.
+> [!WARNING]
+> **The hosted service is offline.** Since at least 26 September 2026 its
+> Railway address returns "Application not found", so neither the direct URL
+> nor the bridge below has anything to connect to. The code is kept for
+> reference and in case the service comes back.
+
+This repository contains a credential-free local stdio bridge. It connects
+supported MCP clients to the hosted DeltaBot service; it does not contain a
+seller wallet, buyer key, Railway credential, or local copy of the paid tools.
+It is not published on npm; `npx` installs it straight from this repository.
 
 ## Getting started
 
 You need an MCP client and, for paid calls, an x402-capable wallet holding Base
 USDC; listing the tools needs no wallet. Clients with Streamable HTTP support need
-nothing else (see below). The stdio bridge needs Node.js 18 or later and can be
-run from a clone of this repository:
+nothing else (see below). Stdio-only clients need Node.js 18 or later and the
+`npx` command shown in [Connect from a stdio-only client](#connect-from-a-stdio-only-client).
+
+To run the bridge from a clone instead:
 
 ```bash
 git clone https://github.com/gkaragioul/deltabot-utility-suite.git
@@ -42,25 +51,29 @@ Configure the client to run this command:
 ```json
 {
   "command": "npx",
-  "args": ["-y", "@gkaragioul/deltabot-utility-suite"]
+  "args": ["-y", "github:gkaragioul/deltabot-utility-suite"]
 }
 ```
 
-The command starts a local stdio bridge to the same hosted service. Tool
+The command downloads the bridge from this repository and starts it as a local
+stdio bridge to the same hosted service. Tool
 discovery is free; a paid tool call receives its Base-USDC x402 payment request
 from the hosted seller and can only proceed after the buyer pays with their own
 compatible wallet.
 
 ## Registry metadata
 
-`server.json` declares the npm stdio package and the direct hosted remote for
-the official MCP Registry. It does not claim a Registry listing until the
-Registry accepts the published metadata.
+`server.json` is prepared for the official MCP Registry. It names the npm
+package `@gkaragioul/deltabot-utility-suite`, which has not been published, so
+it cannot be submitted until that package is on npm and the service is back
+online. The project is not listed in the Registry.
 
 ## Verification
 
-Verified against the live hosted endpoint with MCP `initialize` and
-`tools/list`; no on-chain payment was made.
+While the service was online, the bridge was verified against the live hosted
+endpoint with MCP `initialize` and `tools/list`; no on-chain payment was made.
+On 26 September 2026 the `npx` install from GitHub worked, but the hosted
+endpoint returned 404 "Application not found".
 
 ## Disclaimer
 
