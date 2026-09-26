@@ -8,6 +8,25 @@ The npm package is a credential-free local stdio bridge. It connects supported
 MCP clients to the hosted DeltaBot service; it does not contain a seller wallet,
 buyer key, Railway credential, or local copy of the paid tools.
 
+## Getting started
+
+You need an MCP client and, for paid calls, an x402-capable wallet holding Base
+USDC; listing the tools needs no wallet. Clients with Streamable HTTP support need
+nothing else (see below). The stdio bridge needs Node.js 18 or later and can be
+run from a clone of this repository:
+
+```bash
+git clone https://github.com/gkaragioul/deltabot-utility-suite.git
+cd deltabot-utility-suite
+npm ci
+npm test
+```
+
+Then configure the client to run `node` with the absolute path of
+`bin/deltabot-utility-suite.mjs` as its only argument. Once connected, the client
+lists the 25 tools; calling one returns an x402 payment request that your wallet
+must approve before the tool runs.
+
 ## Connect directly (Streamable HTTP)
 
 MCP clients that support remote Streamable HTTP can connect directly to:
@@ -42,3 +61,12 @@ Registry accepts the published metadata.
 
 Verified against the live hosted endpoint with MCP `initialize` and
 `tools/list`; no on-chain payment was made.
+
+## Disclaimer
+
+This bridge is provided as is, without warranty of any kind, under the
+[MIT License](LICENSE), and the hosted service comes with no guarantee of
+availability or correct results. Use both at your own risk. Paid calls spend real
+Base USDC from your own wallet and on-chain payments generally cannot be reversed,
+so review each payment request before approving it. You are responsible for how
+you use the tools and their output.
